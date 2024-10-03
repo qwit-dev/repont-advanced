@@ -1,3 +1,6 @@
+// leaflet
+import { MapContainer, TileLayer, useMap } from 'react-leaflet'
+
 const MainIndexPage = () => {
     return (
         <div>
