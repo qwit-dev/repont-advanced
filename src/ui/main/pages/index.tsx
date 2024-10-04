@@ -1,19 +1,8 @@
 import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 
-const ResizeHandler = () => {
+const MapHandler = () => {
     const map = useMap();
-    const [height, setHeight] = useState(window.innerHeight);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setHeight(window.innerHeight);
-            map.invalidateSize();
-        };
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, [map]);
 
     useEffect(() => {
         const handleMoveEnd = () => {
@@ -32,14 +21,17 @@ const ResizeHandler = () => {
 }
 
 const MainIndexPage = () => {
+    const [height, setHeight] = useState(window.innerHeight);
+
     return (
-        <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true} style={{ height: '100vh' }}>
+        <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true} style={
+            { position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', zIndex: '0' }}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Marker position={[51.505, -0.09]} />
-            <ResizeHandler />
+            <MapHandler/>
         </MapContainer>
     );
 }
