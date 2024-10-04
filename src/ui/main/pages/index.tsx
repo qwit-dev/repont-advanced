@@ -15,6 +15,19 @@ const ResizeHandler = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [map]);
 
+    useEffect(() => {
+        const handleMoveEnd = () => {
+            const bounds = map.getBounds();
+            const topRight = bounds.getNorthEast();
+            const bottomLeft = bounds.getSouthWest();
+            // boundok visszaadnak egy latlng objectet amiben van a latitude es a longitude
+            console.log('Bounds:', topRight, bottomLeft);
+        }
+        map.on('moveend', handleMoveEnd);
+        
+        return () => map.off('moveend', handleMoveEnd);
+    }, [map]);
+    
     return null;
 }
 
